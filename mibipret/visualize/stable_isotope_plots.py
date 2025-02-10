@@ -77,8 +77,8 @@ def Lambda_plot(delta_C,
         **kwargs: dict
             dictionary with plot settings
 
-    Returns
-    -------
+    Returns:
+    --------
         fig : Figure object
             Figure object of created activity plot.
         ax :  Axes object
@@ -165,8 +165,8 @@ def Rayleigh_fractionation_plot(concentration,
         **kwargs: dict
             dictionary with plot settings
 
-    Returns
-    -------
+    Returns:
+    --------
         fig : Figure object
             Figure object of created activity plot.
         ax :  Axes object
@@ -257,8 +257,8 @@ def Keeling_plot(concentration,
         **kwargs: dict
             dictionary with plot settings
 
-    Returns
-    -------
+    Returns:
+    --------
         fig : Figure object
             Figure object of created activity plot.
         ax :  Axes object
