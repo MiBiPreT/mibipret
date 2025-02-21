@@ -8,6 +8,63 @@ import pandas as pd
 import mibipret.data.names_data as names
 
 
+def determine_quantities(cols,
+         name_list = 'all',
+         verbose = False,
+         ):
+    """Determine quantities to analyse.
+
+    Input
+    -----
+        cols: list
+            Names of quantities from pd.DataFrame)
+        name_ist: str or list, dafault is 'all'
+            either short name for group of quantities to use, such as:
+                    - 'all' (all qunatities given in data frame except settings)
+                    - 'BTEX' (for benzene, toluene, ethylbenzene, xylene)
+                    - 'BTEXIIN' (for benzene, toluene, ethylbenzene, xylene,
+                                  indene, indane and naphthaline)
+            or list of strings with names of quantities to use
+        verbose: Boolean
+            verbose flag (default False)
+
+    Output
+    ------
+        quantities: list
+            list of strings with names of quantities to use and present in data
+
+    """
+    if name_list == 'all':
+        quantities = list(set(cols) - set(names.setting_data))
+        if verbose:
+            print("All data columns except for those with settings will be considered as input.")
+
+    elif isinstance(name_list, list):
+        quantities,remainder_list1,remainder_list2 = compare_lists(cols,name_list)
+        if not quantities:
+            raise ValueError("No quantities from name list provided in data.\
+                             Presumably data not in standardized format. \
+                             Run 'standardize()' first.")
+
+    elif isinstance(name_list, str) and name_list in names.contaminants.keys():
+        contaminants = names.contaminants[name_list].copy()
+
+        if (names.name_o_xylene in cols) and (names.name_pm_xylene in cols):
+            contaminants.remove(names.name_xylene)
+
+        quantities,remainder_list1,remainder_list2 = compare_lists(cols,contaminants)
+        for cont in remainder_list2:
+            print("WARNING: No data on {} given, zero concentration assumed.".format(cont))
+            print('________________________________________________________________')
+
+    else:
+        raise ValueError("Group of quantities in short notation '{}' not defined".format(name_list))
+
+    if verbose:
+        print("Selected set of quantities: ", *quantities,sep='\n')
+
+    return quantities
+
 def extract_data(data_frame,
                  name_list,
                  keep_setting_data = True,

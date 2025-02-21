@@ -11,7 +11,6 @@ used for biodegredation and bioremediation analysis.
 import numpy as np
 import pandas as pd
 import mibipret.data.names_data as names
-import mibipret.data.names_metabolites as names_meta
 from mibipret.data.unit_settings import standard_units
 
 
@@ -96,9 +95,9 @@ def example_data(data_type = 'all',
     contaminants_s03 = [853., 17., 1286., 528., 214., 1031., 31., 3879.]
     contaminants_s04 = [1254., 10., 1202., 79., 61., 814., 59., 1970.]
 
-    metabolites = [names_meta.name_phenol,
-                   names_meta.name_cinnamic_acid,
-                   names_meta.name_benzoic_acid]
+    metabolites = [names.name_phenol,
+                   names.name_cinnamic_acid,
+                   names.name_benzoic_acid]
 
     metabolites_units = [microgl,microgl,microgl]
     metabolites_s01 = [0.2, 0.4, 1.4]

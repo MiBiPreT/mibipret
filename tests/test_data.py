@@ -18,8 +18,8 @@ from mibipret.data.set_data import compare_lists
 from mibipret.data.set_data import extract_data
 from mibipret.data.set_data import merge_data
 
-path_data = "./mibipret/data"
-# path_data = "../mibipret/data"
+# path_data = "./mibipret/data"
+path_data = "../mibipret/data"
 
 class TestLoadData:
     """Class for testing data loading routines in data module of mibipret."""
@@ -203,15 +203,14 @@ class TestStandardNames:
     def test_standard_names_04(self):
         """Testing routine standard_names().
 
-        Testing keywork check_metabolites by checking that routine identifies
+        Testing standardization of metabolites by checking that routine identifies
         column names for metabolites in example data.
         """
-        names_meta = ['Phenol','benzoic acid']
+        names_meta = ['Phenol','benzoic_acid']
 
         results = standard_names(names_meta,
-                                  reduce = True,
-                                  check_metabolites = True,
-                                  )
+                                 reduce = True,
+                                 )
         assert len(results) == 2
 
     def test_standard_names_05(self):
@@ -347,10 +346,9 @@ class TestCheckDataColumns:
         """Testing check_column() on complete example data.
 
         Testing that routine  check_column() identifies all standard names in
-        data frame of complete example data..
+        data frame of complete example data.
         """
-        results = check_columns(self.data4check,
-                                check_metabolites=True)
+        results = check_columns(self.data4check)
 
         assert len(results) == 3
 
@@ -426,12 +424,12 @@ class TestCheckDataUnits:
     def test_check_units_03(self):
         """Testing check of units.
 
-        Testing routine check_units() with keyword check_metabolite.
+        Testing routine check_units() with metabolites.
         Testing of quantities where units are not in expected format when input is
         the data frame with only the unit-row.
         """
         data4units = pd.DataFrame([self.units_mod+['-']],columns = self.columns+['Phenol'])
-        col_check_list = check_units(data4units,check_metabolites=True)
+        col_check_list = check_units(data4units)
 
         assert col_check_list == self.check_list+['phenol']
 
@@ -552,11 +550,10 @@ class TestDataStandardize:
         here that data frame is cut from unidentified quantities.
         """
         data_standard,units = standardize(self.data4standard_1,
-                                          check_metabolites = False,
                                           verbose=False)
 
         print(data_standard.columns[-2:])
-        assert data_standard.shape[1] == self.data4standard_1.shape[1]-2 and \
+        assert data_standard.shape[1] == self.data4standard_1.shape[1]-1 and \
                 data_standard.shape[0] == self.data4standard_1.shape[0]-1
 
     def test_standardize_02(self,capsys):
