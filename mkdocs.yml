@@ -11,6 +11,8 @@ nav:
   - Getting started:
     - Getting started: index.md
     - Development: getting-started/development.md
+  - Advanced usage:
+    - Data pipeline: advanced/data_pipeline_template.md
   - API Reference:
     - Reference: reference/reference.md
 

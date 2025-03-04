@@ -1,8 +1,5 @@
-```
-Question: As we recieved raw data from different sites in different format and information, it is better to crop the required data according to all the analysis that we want to perform, and creat a new excel or CSV file. After that we can standardize this excel/csv file acoording to the general data template which is defined based on the data management requirement for the in-situ site meassurement and different analysis of the MIBIREM project. What do you think?
-```
 
-The next step is to creat the data pipleine to do the following tasks: 
+In the following you could read all the steps to create data pipeline for your project: 
 
 ## 1. Data Ingestion (Collection of Raw Data)
 This is the first stage, where raw data is gathered from various sources and ingested into the pipeline. It can be structured as per our case (databases, CSV files, APIs, Excels).
