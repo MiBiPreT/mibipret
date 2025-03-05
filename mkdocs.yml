@@ -8,18 +8,25 @@ edit_uri: "edit/main/docs/"
 copyright: Copyright &copy; 2024 Alraune Zech, Sona Aseyednezhad, Robin Richardson, Jaro Camphuijsen
 
 nav:
+  - Home: index.md
+  - Introduction: introduction/introduction.md
+  - Methods: 
+    - Ordination: methods/ordination.md
+  - Development: development/development.md
   - Getting started:
     - Getting started: index.md
     - Development: getting-started/development.md
   - Advanced usage:
     - Data pipeline: advanced/data_pipeline_template.md
   - API Reference:
-    - Reference: reference/reference.md
+    - Data: reference/reference_data.md
+    - Analysis: reference/reference_analysis.md
+    - Visualize: reference/reference_visualize.md
 
 theme:
   name: "material"
   favicon: assets/icon.png
-  logo: assets/icon.png
+  logo: assets/logo.png
   language: en
   # https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#primary-color
   palette:

@@ -18,7 +18,8 @@ name_aquifer = 'aquifer'
 setting_data = [name_sample,
                 name_observation_well,
                 name_well_type,
-                name_sample_depth]
+                name_sample_depth,
+                name_aquifer]
 
 ### Standard names for environmental parameters
 name_redox = "redoxpot"
@@ -63,7 +64,7 @@ electron_acceptors = dict(
                name_ironII, name_manganese, name_methane]
 )
 
-### Standard names for contaminants
+### Standard names for main contaminants
 name_benzene = 'benzene'
 name_toluene = 'toluene'
 name_ethylbenzene = 'ethylbenzene'
@@ -74,15 +75,81 @@ name_indane = 'indane'
 name_indene = 'indene'
 name_naphthalene = 'naphthalene'
 
-### todo: complete and potentially choose other names
+### Standard names for additional contaminants
+name_styrene = 'styrene'
+name_isopropylbenzene = 'isopropylbenzene'
+name_n_propylbenzene = 'n_propylbenzene'
+name_ethyltoluene = 'ethyltoluene'
+name_2_ethyltoluene = '2_ethyltoluene'
+name_3_ethyltoluene = '3_ethyltoluene'
+name_4_ethyltoluene = '4_ethyltoluene'
+name_trimethylbenzene = 'trimethylbenzene'
+name_123_trimethylbenzene = '123_trimethylbenzene'
+name_124_trimethylbenzene = '124_trimethylbenzene'
+name_135_trimethylbenzene = '135_trimethylbenzene'
+name_4_isopropyltouene = '4_isopropyltouene'
+name_13_diethylbenzene = '13_diethylbenzene'
+name_1245_tetramethylbenzene = '1245_tetramethylbenzene'
+name_2_methylindene = '2_methylindene'
+name_1_methylnaphtalene = '1_methylnaphtalene'
+name_2_methylnaphtalene = '2_methylnaphtalene'
+name_2_ethylnaphtalene = '2_ethylnaphtalene'
+name_16_dimethylnaphtalene = '16_dimethylnaphtalene'
+name_26_dimethylnaphtalene = '26_dimethylnaphtalene'
+
 contaminants = dict(
     BTEX = [name_benzene,name_toluene,name_ethylbenzene, name_pm_xylene,
                 name_o_xylene, name_xylene],
     BTEXIIN = [name_benzene,name_toluene,name_ethylbenzene, name_pm_xylene,
                 name_o_xylene, name_xylene, name_indane,name_indene, name_naphthalene],
     all_cont = [name_benzene,name_toluene,name_ethylbenzene, name_pm_xylene,
-                name_o_xylene, name_xylene, name_indane,name_indene, name_naphthalene],
+                name_o_xylene, name_xylene, name_indane,name_indene, name_naphthalene,
+                name_styrene,name_isopropylbenzene,name_n_propylbenzene,name_ethyltoluene,
+                name_2_ethyltoluene,name_3_ethyltoluene,name_4_ethyltoluene,
+                name_trimethylbenzene,name_123_trimethylbenzene,name_124_trimethylbenzene,
+                name_135_trimethylbenzene,name_4_isopropyltouene,name_13_diethylbenzene,
+                name_1245_tetramethylbenzene,name_2_methylindene,name_1_methylnaphtalene,
+                name_2_ethylnaphtalene,name_16_dimethylnaphtalene,name_26_dimethylnaphtalene],
 )
+
+### Standard names for a selection of metabolites
+name_phenol = "phenol"
+name_cinnamic_acid = "cinnamic_acid"
+name_benzoic_acid = "benzoic_acid"
+name_dimethyl_benzoic_acid = 'dimethyl_benzoic_acid'
+name_benzylacetate = 'benzylacetate'
+name_benzoylacetic_acid = "benzoylacetic_acid"
+name_p_coumaric_acid = "p-coumaric_acid"
+name_hydroxycinnamate = "hydroxycinnamate"
+name_acetylphenol = "acetylphenol"
+name_methyl_benzoic_acid = 'methyl_benzoic_acid'
+name_benzylsuccinic_acid = "benzylsuccinic_acid"
+name_3o_toluoyl_propionic_acid = "3o_toluoyl_propionic_acid"
+name_2methylindene = "2_methylindene"
+
+### Standard names for metabolite related quantities
+name_metabolites_conc = "metabolites_concentration"
+name_metabolites_variety = 'metabolites_variety'
+
+metabolites = [name_phenol,
+               name_cinnamic_acid,
+               name_benzoic_acid,
+               name_dimethyl_benzoic_acid,
+               name_benzylacetate,
+               name_benzoylacetic_acid,
+               name_p_coumaric_acid,
+               name_hydroxycinnamate,
+               name_acetylphenol,
+               name_methyl_benzoic_acid,
+               name_benzylsuccinic_acid,
+               name_3o_toluoyl_propionic_acid,
+               name_2methylindene,
+               ]
+
+### standard names/prefixes for isotopes:
+name_13C = 'delta_13C'
+name_2H = 'delta_2H'
+isotopes = ['delta_13C','delta_2H']
 
 ### Standard names for NA screening related quantities
 name_total_oxidators = "total_oxidators"
@@ -95,15 +162,7 @@ name_intervention_traffic = 'intervention_traffic'
 name_intervention_number = 'intervention_number'
 name_intervention_contaminants = 'intervention_contaminants'
 
-### Standard names for metabolite related quantities
-name_metabolites_conc = "metabolites_concentration"
-name_metabolites_variety = 'metabolites_variety'
-
-### standard names/prefixes for isotopes:
-name_13C = 'delta_13C'
-name_2H = 'delta_2H'
-isotopes = ['delta_13C','delta_2H']
-
+### -----------------------------------------------------------------------------
 ### Dictionary with potential names of quantities to be replaced by standard name
 names_settings = {
     "sample": name_sample,
@@ -310,7 +369,174 @@ names_contaminants = {
     "naphtaline": name_naphthalene,
     "naphthaline": name_naphthalene,
     "c10h8": name_naphthalene,
+    'styrene': name_styrene,
+    'styren': name_styrene,
+    'ethenylbenzene': name_styrene,
+    'vinylbenzene': name_styrene,
+    'phenylethene': name_styrene,
+    'phenylethylene': name_styrene,
+    'cinnamene': name_styrene,
+    'styrol': name_styrene,
+    'styrolene': name_styrene,
+    'styropol': name_styrene,
+    "isopropylbenzene" : name_isopropylbenzene,
+    "iso-propylbenzene" : name_isopropylbenzene,
+    "iso_propylbenzene" : name_isopropylbenzene,
+    "iso propylbenzene" : name_isopropylbenzene,
+    "cumene": name_isopropylbenzene,
+    "n_propylbenzene": name_n_propylbenzene,
+    "n-propylbenzene": name_n_propylbenzene,
+    "n propylbenzene": name_n_propylbenzene,
+    "npropylbenzene": name_n_propylbenzene,
+    "propylbenzene": name_n_propylbenzene,
+    'ethyltoluene': name_ethyltoluene,
+    '2_ethyltoluene': name_2_ethyltoluene,
+    '2-ethyltoluene': name_2_ethyltoluene,
+    '2 ethyltoluene': name_2_ethyltoluene,
+    '2ethyltoluene': name_2_ethyltoluene,
+    'ortho_ethyltoluene': name_2_ethyltoluene,
+    'ortho-ethyltoluene': name_2_ethyltoluene,
+    'ortho ethyltoluene': name_2_ethyltoluene,
+    'orthoethyltoluene': name_2_ethyltoluene,
+    'o_ethyltoluene': name_2_ethyltoluene,
+    'o-ethyltoluene': name_2_ethyltoluene,
+    'o ethyltoluene': name_2_ethyltoluene,
+    '3_ethyltoluene': name_3_ethyltoluene,
+    '3-ethyltoluene': name_3_ethyltoluene,
+    '3 ethyltoluene': name_3_ethyltoluene,
+    '3ethyltoluene': name_3_ethyltoluene,
+    'meta_ethyltoluene': name_3_ethyltoluene,
+    'meta-ethyltoluene': name_3_ethyltoluene,
+    'meta ethyltoluene': name_3_ethyltoluene,
+    'metaethyltoluene': name_3_ethyltoluene,
+    'm_ethyltoluene': name_3_ethyltoluene,
+    'm-ethyltoluene': name_3_ethyltoluene,
+    'm ethyltoluene': name_3_ethyltoluene,
+    '4_ethyltoluene': name_4_ethyltoluene,
+    '4-ethyltoluene': name_4_ethyltoluene,
+    '4 ethyltoluene': name_4_ethyltoluene,
+    '4ethyltoluene': name_4_ethyltoluene,
+    'para_ethyltoluene': name_4_ethyltoluene,
+    'para-ethyltoluene': name_4_ethyltoluene,
+    'para ethyltoluene': name_4_ethyltoluene,
+    'paraethyltoluene': name_4_ethyltoluene,
+    'p_ethyltoluene': name_4_ethyltoluene,
+    'p-ethyltoluene': name_4_ethyltoluene,
+    'p ethyltoluene': name_4_ethyltoluene,
+    'trimethylbenzene': name_trimethylbenzene,
+    '123_trimethylbenzene': name_123_trimethylbenzene,
+    '123-trimethylbenzene': name_123_trimethylbenzene,
+    '123 trimethylbenzene': name_123_trimethylbenzene,
+    '123trimethylbenzene': name_123_trimethylbenzene,
+    '1,2,3_trimethylbenzene': name_123_trimethylbenzene,
+    '1,2,3-trimethylbenzene': name_123_trimethylbenzene,
+    '1,2,3 trimethylbenzene': name_123_trimethylbenzene,
+    '1,2,3trimethylbenzene': name_123_trimethylbenzene,
+    '124_trimethylbenzene': name_124_trimethylbenzene,
+    '124-trimethylbenzene': name_124_trimethylbenzene,
+    '124 trimethylbenzene': name_124_trimethylbenzene,
+    '124trimethylbenzene': name_124_trimethylbenzene,
+    '1,2,4_trimethylbenzene': name_124_trimethylbenzene,
+    '1,2,4-trimethylbenzene': name_124_trimethylbenzene,
+    '1,2,4 trimethylbenzene': name_124_trimethylbenzene,
+    '1,2,4trimethylbenzene': name_124_trimethylbenzene,
+    '135_trimethylbenzene': name_135_trimethylbenzene,
+    '135-trimethylbenzene': name_135_trimethylbenzene,
+    '135 trimethylbenzene': name_135_trimethylbenzene,
+    '135trimethylbenzene': name_135_trimethylbenzene,
+    '1,3,5_trimethylbenzene': name_135_trimethylbenzene,
+    '1,3,5-trimethylbenzene': name_135_trimethylbenzene,
+    '1,3,5 trimethylbenzene': name_135_trimethylbenzene,
+    '1,3,5trimethylbenzene': name_135_trimethylbenzene,
+    '4_isopropyltouene': name_4_isopropyltouene,
+    '4-isopropyltouene': name_4_isopropyltouene,
+    '4 isopropyltouene': name_4_isopropyltouene,
+    '4isopropyltouene': name_4_isopropyltouene,
+    '13_diethylbenzene': name_13_diethylbenzene,
+    '13-diethylbenzene': name_13_diethylbenzene,
+    '13 diethylbenzene': name_13_diethylbenzene,
+    '13diethylbenzene': name_13_diethylbenzene,
+    '1,3_diethylbenzene': name_13_diethylbenzene,
+    '1,3-diethylbenzene': name_13_diethylbenzene,
+    '1,3 diethylbenzene': name_13_diethylbenzene,
+    '1,3diethylbenzene': name_13_diethylbenzene,
+    '1245_tetramethylbenzene': name_1245_tetramethylbenzene,
+    '1245-tetramethylbenzene': name_1245_tetramethylbenzene,
+    '1245 tetramethylbenzene': name_1245_tetramethylbenzene,
+    '1245tetramethylbenzene': name_1245_tetramethylbenzene,
+    '1,2,4,5_tetramethylbenzene': name_1245_tetramethylbenzene,
+    '1,2,4,5-tetramethylbenzene': name_1245_tetramethylbenzene,
+    '1,2,4,5 tetramethylbenzene': name_1245_tetramethylbenzene,
+    '1,2,4,5tetramethylbenzene': name_1245_tetramethylbenzene,
+    '2_methylindene': name_2_methylindene,
+    '2-methylindene': name_2_methylindene,
+    '2 methylindene': name_2_methylindene,
+    '2methylindene': name_2_methylindene,
+    '1_methylnaphtalene': name_1_methylnaphtalene,
+    '1-methylnaphtalene': name_1_methylnaphtalene,
+    '1 methylnaphtalene': name_1_methylnaphtalene,
+    '1methylnaphtalene': name_1_methylnaphtalene,
+    '2_methylnaphtalene': name_2_methylnaphtalene,
+    '2-methylnaphtalene': name_2_methylnaphtalene,
+    '2 methylnaphtalene': name_2_methylnaphtalene,
+    '2methylnaphtalene': name_2_methylnaphtalene,
+    '2_ethylnaphtalene': name_2_ethylnaphtalene,
+    '2-ethylnaphtalene': name_2_ethylnaphtalene,
+    '2 ethylnaphtalene': name_2_ethylnaphtalene,
+    '2ethylnaphtalene': name_2_ethylnaphtalene,
+    '16_dimethylnaphtalene': name_16_dimethylnaphtalene,
+    '16-dimethylnaphtalene': name_16_dimethylnaphtalene,
+    '16 dimethylnaphtalene': name_16_dimethylnaphtalene,
+    '16dimethylnaphtalene': name_16_dimethylnaphtalene,
+    '1,6_dimethylnaphtalene': name_16_dimethylnaphtalene,
+    '1,6-dimethylnaphtalene': name_16_dimethylnaphtalene,
+    '1,6 dimethylnaphtalene': name_16_dimethylnaphtalene,
+    '1,6dimethylnaphtalene': name_16_dimethylnaphtalene,
+    '26_dimethylnaphtalene': name_26_dimethylnaphtalene,
+    '26-dimethylnaphtalene': name_26_dimethylnaphtalene,
+    '26 dimethylnaphtalene': name_26_dimethylnaphtalene,
+    '26dimethylnaphtalene': name_26_dimethylnaphtalene,
+    '2,6_dimethylnaphtalene': name_26_dimethylnaphtalene,
+    '2,6-dimethylnaphtalene': name_26_dimethylnaphtalene,
+    '2,6 dimethylnaphtalene': name_26_dimethylnaphtalene,
+    '2,6dimethylnaphtalene': name_26_dimethylnaphtalene,
     }
+
+names_contaminants_analysis = {
+    "sum_contaminants": name_total_contaminants,
+    "sum-contaminants": name_total_contaminants,
+    "sum contaminants": name_total_contaminants,
+    "sumcontaminants": name_total_contaminants,
+    "total_contaminants": name_total_contaminants,
+    "total-contaminants": name_total_contaminants,
+    "total contaminants": name_total_contaminants,
+    "totalcontaminants": name_total_contaminants,
+    'Sum GC': name_total_contaminants,
+    "total_oxidators": name_total_oxidators,
+    "total_reductors": name_total_reductors,
+    "NP_avail": name_NP_avail,
+    'e_balance': name_e_balance,
+    'na_traffic_light': name_na_traffic_light,
+    'intervention_traffic': name_intervention_traffic,
+    'intervention_number': name_intervention_number,
+    'intervention_contaminants': name_intervention_contaminants,
+}
+
+names_metabolites = {
+    "phenol": name_phenol,
+    'dimethyl_benzoic_acid': name_dimethyl_benzoic_acid,
+    'benzylacetate': name_benzylacetate,
+    "benzoylacetic_acid": name_benzoylacetic_acid,
+    "p-coumaric_acid": name_p_coumaric_acid,
+    "hydroxycinnamate": name_hydroxycinnamate,
+    "acetylphenol": name_acetylphenol,
+    'methyl_benzoic_acid': name_methyl_benzoic_acid,
+    "cinnamic_acid": name_cinnamic_acid,
+    "benzoic_acid": name_benzoic_acid,
+    "benzylsuccinic_acid": name_benzylsuccinic_acid,
+    "3o_toluoyl_propionic_acid": name_3o_toluoyl_propionic_acid,
+    "2methylindene": name_2methylindene,
+}
 
 names_metabolites_sum = {
     "metaboliteconcentration": name_metabolites_conc,
@@ -391,10 +617,13 @@ names_isotopes = {
     'delta hydrogen2' : name_2H,
     }
 
+
 col_dict = {
     **names_settings,
     **names_environment,
     **names_chemicals,
     **names_contaminants,
+    **names_contaminants_analysis,
+    **names_metabolites,
     **names_metabolites_sum,
 }

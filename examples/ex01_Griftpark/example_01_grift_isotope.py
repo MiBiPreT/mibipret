@@ -15,8 +15,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from mibipret.analysis.reduction.stable_isotope_regression import Lambda_regression
 from mibipret.analysis.reduction.stable_isotope_regression import extract_isotope_data
-from mibipret.data.data import load_csv
-from mibipret.data.data import standardize
+from mibipret.data.check_data import standardize
+from mibipret.data.load_data import load_csv
 
 plt.close('all')
 

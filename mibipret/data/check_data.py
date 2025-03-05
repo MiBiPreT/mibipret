@@ -7,7 +7,6 @@
 import numpy as np
 import pandas as pd
 import mibipret.data.names_data as names
-import mibipret.data.names_metabolites as names_meta
 from mibipret.data.unit_settings import all_units
 from mibipret.data.unit_settings import standard_units
 from mibipret.data.unit_settings import units_env_cond
@@ -16,7 +15,6 @@ to_replace_list = ["-",'--','',' ','  ']
 to_replace_value = np.nan
 
 def standard_names(name_list,
-                   check_metabolites = False,
                    standardize = True,
                    reduce = False,
                    verbose = False,
@@ -30,8 +28,6 @@ def standard_names(name_list,
     -------
         name_list: string or list of strings
             names of quantities to be transformed to standard
-        check_metabolites: Boolean, default False
-            Whether to check on metabolite names
         standardize: Boolean, default False
             Whether to standardize identified column names
         reduce: Boolean, default False
@@ -62,9 +58,6 @@ def standard_names(name_list,
     names_transform = {}
 
     dict_names = names.col_dict.copy()
-
-    if check_metabolites is not False:
-        dict_names.update(names_meta.names_metabolites)
 
     if isinstance(name_list, str):
         name_list = [name_list]
@@ -171,12 +164,15 @@ def check_data_frame(data_frame,
         else:
             data.set_index(names.name_sample,inplace = True)
 
-    cols = data.columns.to_list()
+    if isinstance(data, pd.Series):
+        cols = [data.name]
+    else:
+        cols = data.columns.to_list()
 
     return data, cols
 
+
 def check_columns(data_frame,
-                  check_metabolites = False,
                   standardize = False,
                   reduce = False,
                   verbose = True):
@@ -189,8 +185,6 @@ def check_columns(data_frame,
     -------
         data_frame: pd.DataFrame
             dataframe with the measurements
-        check_metabolites: Boolean, default False
-            Whether to also check on metabolite names
         standardize: Boolean, default False
             Whether to standardize identified column names
         reduce: Boolean, default False
@@ -227,7 +221,6 @@ def check_columns(data_frame,
     results = standard_names(cols,
                              standardize = False,
                              reduce = False,
-                             check_metabolites = check_metabolites,
                              verbose = False,
                              )
 
@@ -268,7 +261,6 @@ def check_columns(data_frame,
     return (column_names_known,column_names_unknown,column_names_standard)
 
 def check_units(data,
-                check_metabolites = False,
                 verbose = True):
     """Function to check the units of the measurements.
 
@@ -277,8 +269,6 @@ def check_units(data,
         data: pandas.DataFrames
             dataframe with the measurements where first row contains
             the units or a dataframe with only the column names and units
-        check_metabolites: Boolean, default False
-            flag to check on metabolites' units
         verbose: Boolean
             verbose statement (default True)
 
@@ -307,10 +297,11 @@ def check_units(data,
     else:
         units = data.copy()
 
+    units_in_data = set(map(lambda x: str(x).lower(), units.iloc[0,:].values))
     ### testing if provided data frame contains any unit
     test_unit = False
     for u in all_units:
-        if u in units.iloc[0].to_list():
+        if u in units_in_data:
             test_unit = True
             break
     if not test_unit:
@@ -319,19 +310,19 @@ def check_units(data,
                          line, check www.mibipretdocs.nl/dataloading.")
 
     # standardize column names (as it might not has happened for data yet)
-    check_columns(units,standardize = True, check_metabolites=check_metabolites, verbose = False)
+    check_columns(units,standardize = True, verbose = False)
     col_check_list= []
 
     for quantity in units.columns:
         if quantity in names.chemical_composition:
-            if units[quantity][0].lower() not in standard_units['mgperl']:
+            if str(units[quantity][0]).lower() not in standard_units['mgperl']:
                 col_check_list.append(quantity)
                 if verbose:
                     print("Warning: Check unit of {}!\n Given in {}, but must be milligramm per liter (e.g. {})."
                               .format(quantity,units[quantity][0],standard_units['mgperl'][0]))
 
         if quantity in names.contaminants['all_cont']:
-            if units[quantity][0].lower() not in standard_units['microgperl']:
+            if str(units[quantity][0]).lower() not in standard_units['microgperl']:
                 col_check_list.append(quantity)
                 if verbose:
                     print("Warning: Check unit of {}!\n Given in {}, but must be microgramm per liter (e.g. {})."
@@ -339,26 +330,25 @@ def check_units(data,
 
         if quantity in list(units_env_cond.keys()):
             unit_type = units_env_cond[quantity]
-            if units[quantity][0].lower() not in standard_units[unit_type]:
+            if str(units[quantity][0]).lower() not in standard_units[unit_type]:
                 col_check_list.append(quantity)
                 if verbose:
                     print("Warning: Check unit of {}!\n Given in {}, but must be in {} (e.g. {}).".format(
                             quantity,units[quantity][0],unit_type,standard_units[unit_type][0]))
 
         if quantity.split('-')[0] in names.isotopes:
-            if units[quantity][0].lower() not in standard_units['permil']:
+            if str(units[quantity][0]).lower() not in standard_units['permil']:
                 col_check_list.append(quantity)
                 if verbose:
                     print("Warning: Check unit of {}!\n Given in {}, but must be per mille (e.g. {})."
                               .format(quantity,units[quantity][0],standard_units['permil'][0]))
 
-        if check_metabolites:
-            if quantity in names_meta.metabolites['all_meta']:
-                if units[quantity][0].lower() not in standard_units['microgperl']:
-                    col_check_list.append(quantity)
-                    if verbose:
-                        print("Warning: Check unit of {}!\n Given in {}, but must be microgramm per liter (e.g. {})."
-                                  .format(quantity,units[quantity][0],standard_units['microgperl'][0]))
+        if quantity in names.metabolites:
+            if str(units[quantity][0]).lower() not in standard_units['microgperl']:
+                col_check_list.append(quantity)
+                if verbose:
+                    print("Warning: Check unit of {}!\n Given in {}, but must be microgramm per liter (e.g. {})."
+                              .format(quantity,units[quantity][0],standard_units['microgperl'][0]))
 
     if verbose:
         print('________________________________________________________________')
@@ -442,7 +432,6 @@ def check_values(data_frame,
     return data
 
 def standardize(data_frame,
-                check_metabolites = False,
                 reduce = True,
                 store_csv = False,
                 verbose=True,
@@ -506,14 +495,11 @@ def standardize(data_frame,
     check_columns(data,
                   standardize = True,
                   reduce = reduce,
-                  check_metabolites = False,
-                  # check_metabolites = check_metabolites,
                   verbose = verbose)
 
     # general unit check
     units = data.drop(labels = np.arange(1,data.shape[0]))
     col_check_list = check_units(units,
-                                 check_metabolites = check_metabolites,
                                  verbose = verbose)
 
     # transform data to numeric values
