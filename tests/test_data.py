@@ -777,7 +777,7 @@ class TestDataExtract:
         data = extract_data(self.data4extract,
                             name_list = self.name_list1)
 
-        assert data.shape[1] == 4
+        assert set(data.columns) == {'sample_nr', 'obs_well', 'sulfate','benzene'}
 
     def test_extract_data_02(self):
         """Testing routine extract_data().
@@ -789,7 +789,7 @@ class TestDataExtract:
                             keep_setting_data=False
                             )
 
-        assert data.shape[1] == 2
+        assert set(data.columns) == {'sulfate','benzene'}
 
     def test_extract_data_03(self):
         """Testing routine extract_data().
@@ -799,7 +799,7 @@ class TestDataExtract:
         data = extract_data(self.data4extract,
                             name_list = self.name_list2)
 
-        assert data.shape[1] == 3
+        assert set(data.columns) == {'sample_nr', 'obs_well', 'benzene'}
 
     def test_extract_data_04(self):
         """Testing routine extract_data().
@@ -811,7 +811,7 @@ class TestDataExtract:
                             keep_setting_data=False,
                             )
 
-        assert data.shape[1] == 2
+        assert set(data.columns) == {'sample_nr', 'benzene'}
 
 
     def test_extract_data_05(self,capsys):
@@ -824,7 +824,7 @@ class TestDataExtract:
 
         out,err=capsys.readouterr()
 
-        assert data.shape[1] == 4 and len(out)>0
+        assert set(data.columns) == {'sample_nr', 'obs_well', 'sulfate','benzene'} and len(out)>0
 
 class TestDataMerge:
     """Class for testing data module of mibipret."""

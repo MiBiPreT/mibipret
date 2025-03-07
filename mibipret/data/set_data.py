@@ -131,28 +131,14 @@ def extract_data(data_frame,
 
     if keep_setting_data:
         settings,r1,r2 = compare_lists(cols,names.setting_data)
-        i1,quantities_without_settings,r2 = compare_lists(quantities,names.setting_data)
-        columns_names = quantities + quantities_without_settings
+        i1,quantities_without_settings,r2 = compare_lists(quantities,settings)
+        columns_names = settings + quantities_without_settings
+
     else:
         columns_names = quantities
 
     return data[columns_names]
 
-
-    # data = data_frame.copy()
-
-    # inter_names,r_columns,r_name_list = compare_lists(data.columns.to_list(),name_list)
-
-    # if len(inter_names)<len(name_list):
-    #     print("Warning: Not all variables in name_list are identified in the data frame columns: ",r_name_list)
-
-    # if keep_setting_data:
-    #     inter_settings,r1,r2 = compare_lists(data.columns.to_list(),names.setting_data)
-    #     i1,rim_names,r2 = compare_lists(inter_names,names.setting_data)
-    #     inter1 = inter_settings + rim_names
-    # else:
-    #     inter1 = inter_names
-    # return data[inter1]
 
 def merge_data(data_frames_list,
                how='outer',
