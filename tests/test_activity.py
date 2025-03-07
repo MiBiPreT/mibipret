@@ -40,6 +40,7 @@ class TestActivity:
         fig, ax = activity(self.data_01)
 
         assert isinstance(fig,plt.Figure)
+        plt.close(fig)
 
     def test_activity_02(self):
         """Testing routine activity().
@@ -49,6 +50,7 @@ class TestActivity:
         fig, ax = activity(self.data_02)
 
         assert isinstance(fig,plt.Figure)
+        plt.close(fig)
 
     def test_activity_03(self):
         """Testing routine activity().
@@ -58,6 +60,7 @@ class TestActivity:
         fig, ax = activity(self.data_03)
 
         assert isinstance(fig,plt.Figure)
+        plt.close(fig)
 
     def test_activity_04(self):
         """Testing routine activity().
@@ -67,6 +70,7 @@ class TestActivity:
         fig, ax = activity(self.data_04)
 
         assert isinstance(fig,plt.Figure)
+        plt.close(fig)
 
     def test_activity_05(self):
         """Testing routine activity().

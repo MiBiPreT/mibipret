@@ -101,6 +101,7 @@ class TestOrdinationPlot:
         fig, ax = ordination_plot(self.pca_output_01)
 
         assert isinstance(fig,plt.Figure)
+        plt.close(fig)
 
     def test_ordination_plot_05(self):
         """Testing routine ordination_plot().
@@ -112,6 +113,7 @@ class TestOrdinationPlot:
         fig, ax = ordination_plot(self.pca_output_02)
 
         assert isinstance(fig,plt.Figure)
+        plt.close(fig)
 
     def test_ordination_plot_06(self):
         """Testing routine ordination_plot().
@@ -123,6 +125,7 @@ class TestOrdinationPlot:
         fig, ax = ordination_plot(self.cca_output_01)
 
         assert isinstance(fig,plt.Figure)
+        plt.close(fig)
 
 
     def test_ordination_plot_07(self):
@@ -137,6 +140,7 @@ class TestOrdinationPlot:
         fig, ax = ordination_plot(test)
 
         assert isinstance(fig,plt.Figure)
+        plt.close(fig)
 
     def test_ordination_plot_08(self):
         """Testing routine ordination_plot().
@@ -149,6 +153,7 @@ class TestOrdinationPlot:
                                   )
 
         assert isinstance(fig,plt.Figure)
+        plt.close(fig)
 
     def test_ordination_plot_09(self):
         """Testing routine ordination_plot().
@@ -169,6 +174,7 @@ class TestOrdinationPlot:
                                   )
 
         assert isinstance(fig,plt.Figure)
+        plt.close(fig)
 
     def test_ordination_plot_11(self):
         """Testing routine ordination_plot().
@@ -180,6 +186,7 @@ class TestOrdinationPlot:
                                   )
 
         assert isinstance(fig,plt.Figure)
+        plt.close(fig)
 
     def test_ordination_plot_12(self):
         """Testing routine ordination_plot().
@@ -193,6 +200,7 @@ class TestOrdinationPlot:
                                   )
 
         assert isinstance(fig,plt.Figure)
+        plt.close(fig)
 
     def test_ordination_plot_13(self,capsys):
         """Testing routine ordination_plot().

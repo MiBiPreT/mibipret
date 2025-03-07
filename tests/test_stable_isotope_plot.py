@@ -41,6 +41,7 @@ class TestStableIsotopePlot:
         fig, ax = Lambda_plot(**self.results_Lambda)
 
         assert isinstance(fig,plt.Figure)
+        plt.close(fig)
 
     def test_Lambda_plot_02(self,capsys):
         """Testing routine Lambda_plot().
@@ -65,6 +66,7 @@ class TestStableIsotopePlot:
         fig, ax = Rayleigh_fractionation_plot(**self.results_Rayleigh)
 
         assert isinstance(fig,plt.Figure)
+        plt.close(fig)
 
     def test_Rayleigh_fractionation_plot_02(self,capsys):
         """Testing routine Rayleigh_fractionation_plot().
@@ -89,6 +91,7 @@ class TestStableIsotopePlot:
         fig, ax = Keeling_plot(**self.results_Keeling)
 
         assert isinstance(fig,plt.Figure)
+        plt.close(fig)
 
     def test_Keeling_plot_02(self):
         """Testing routine Keeling_plot().
@@ -100,6 +103,7 @@ class TestStableIsotopePlot:
                                relative_abundance = self.relative_abundance)
 
         assert isinstance(fig,plt.Figure)
+        plt.close(fig)
 
     def test_Keeling_plot_03(self,capsys):
         """Testing routine Keeling_plot().
