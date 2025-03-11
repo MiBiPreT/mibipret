@@ -15,10 +15,12 @@ from mibipret.data.example_data import example_data
 from mibipret.data.load_data import load_csv
 from mibipret.data.load_data import load_excel
 from mibipret.data.set_data import compare_lists
+from mibipret.data.set_data import determine_quantities
 from mibipret.data.set_data import extract_data
 from mibipret.data.set_data import merge_data
 
 path_data = "./mibipret/data"
+#path_data = "../mibipret/data"
 
 class TestLoadData:
     """Class for testing data loading routines in data module of mibipret."""
@@ -193,7 +195,9 @@ class TestStandardNames:
                 * dictionary with transformation references
         """
         results = standard_names(self.names_mod + self.unknown,
-                                  standardize = False)
+                                  standardize = False,
+                                  verbose = True,
+                                  )
 
         assert results[0] == self.names_standard and results[1] == self.names_mod and \
                 results[2] == self.unknown and isinstance(results[3],dict)
@@ -202,15 +206,14 @@ class TestStandardNames:
     def test_standard_names_04(self):
         """Testing routine standard_names().
 
-        Testing keywork check_metabolites by checking that routine identifies
+        Testing standardization of metabolites by checking that routine identifies
         column names for metabolites in example data.
         """
-        names_meta = ['Phenol','benzoic acid']
+        names_meta = ['Phenol','benzoic_acid']
 
         results = standard_names(names_meta,
-                                  reduce = True,
-                                  check_metabolites = True,
-                                  )
+                                 reduce = True,
+                                 )
         assert len(results) == 2
 
     def test_standard_names_05(self):
@@ -260,6 +263,28 @@ class TestStandardNames:
         out,err=capsys.readouterr()
 
         assert len(out)>0
+
+    def test_standard_names_09(self,capsys):
+        """Testing routine standard_names().
+
+        Testing verbose flag for non-standard keyword settings.
+        """
+        standard_names(self.names_mod + self.unknown,
+                       standardize = False,
+                       reduce = True,
+                       verbose=True)
+        out,err=capsys.readouterr()
+
+        assert len(out)>0
+
+    def test_standard_names_10(self):
+        """Testing routine standard_names().
+
+        Testing Error if list contains values other than strings.
+        """
+        with pytest.raises(ValueError):
+            standard_names(['unknown_contaminant',7.0])
+
 
 
 class TestCheckDataFrame:
@@ -346,10 +371,9 @@ class TestCheckDataColumns:
         """Testing check_column() on complete example data.
 
         Testing that routine  check_column() identifies all standard names in
-        data frame of complete example data..
+        data frame of complete example data.
         """
-        results = check_columns(self.data4check,
-                                check_metabolites=True)
+        results = check_columns(self.data4check)
 
         assert len(results) == 3
 
@@ -425,12 +449,12 @@ class TestCheckDataUnits:
     def test_check_units_03(self):
         """Testing check of units.
 
-        Testing routine check_units() with keyword check_metabolite.
+        Testing routine check_units() with metabolites.
         Testing of quantities where units are not in expected format when input is
         the data frame with only the unit-row.
         """
         data4units = pd.DataFrame([self.units_mod+['-']],columns = self.columns+['Phenol'])
-        col_check_list = check_units(data4units,check_metabolites=True)
+        col_check_list = check_units(data4units)
 
         assert col_check_list == self.check_list+['phenol']
 
@@ -551,11 +575,10 @@ class TestDataStandardize:
         here that data frame is cut from unidentified quantities.
         """
         data_standard,units = standardize(self.data4standard_1,
-                                          check_metabolites = False,
                                           verbose=False)
 
         print(data_standard.columns[-2:])
-        assert data_standard.shape[1] == self.data4standard_1.shape[1]-2 and \
+        assert data_standard.shape[1] == self.data4standard_1.shape[1]-1 and \
                 data_standard.shape[0] == self.data4standard_1.shape[0]-1
 
     def test_standardize_02(self,capsys):
@@ -625,6 +648,115 @@ class TestDataCompareLists:
         out,err=capsys.readouterr()
 
         assert len(out)>0
+
+class TestDetermineQuantities:
+    """Class for testing determine_quantities() of mibipret."""
+
+    setting_data = ["sample_nr","obs_well","well_type","depth",'aquifer']
+    list1 = ['pH', 'sulfate','benzene']
+    list2 = ['sulfate','benzene']
+    list3 = ['sulfate','benzene','test_quantity']
+    list4 = ['benzene','pm_xylene','o_xylene', 'xylene', 'indane']
+    list5 =  ['pH','oxygen', 'sulfate', "iron2" ,'methane']
+
+    cols1 = setting_data+list1
+    cols2 = setting_data+list2+['test_name']
+    cols4 = setting_data+list4
+    cols5 = setting_data+list5
+
+
+    def test_determine_quantities_01(self):
+        """Testing routine determine_quantities().
+
+        Testing functionality of routine in standard settings.
+        """
+        quantities = determine_quantities(cols = self.cols1,
+                                          verbose = True)
+
+        assert set(quantities) == set(self.list1)
+
+    def test_determine_quantities_02(self,capsys):
+        """Testing routine determine_quantities().
+
+        Testing functionality when specific list is provided.
+        """
+        quantities = determine_quantities(cols = self.cols2,
+                                          name_list = self.list2,
+                                          verbose = True)
+
+        out,err=capsys.readouterr()
+        assert set(quantities) == set(self.list2) and len(out)>0
+
+    def test_determine_quantities_03(self,capsys):
+        """Testing routine determine_quantities().
+
+        Testing functionality when specific list is provided which
+        also contains names not in the list of column names.
+        """
+        quantities = determine_quantities(cols = self.cols2,
+                                          name_list = self.list3,
+                                          verbose = False)
+
+        out,err=capsys.readouterr()
+        assert set(quantities) == set(self.list2) and len(out)>0
+
+    def test_determine_quantities_04(self,capsys):
+        """Testing routine determine_quantities().
+
+        Testing functionality for short notation of selection of contaminants.
+        """
+        quantities = determine_quantities(cols = self.cols4,
+                                          name_list = 'BTEX',
+                                          verbose = False)
+
+        out,err=capsys.readouterr()
+        assert set(quantities) == set(['benzene', 'pm_xylene', 'o_xylene']) and len(out)>0
+
+    def test_determine_quantities_05(self,capsys):
+        """Testing routine determine_quantities().
+
+        Testing functionality for short notation of selection of electron acceptors.
+        """
+        quantities = determine_quantities(cols = self.cols5,
+                                          name_list = 'all_ea',
+                                          verbose = False)
+
+        out,err=capsys.readouterr()
+        assert set(quantities) == set(self.list5[1:]) and len(out)>0
+
+
+    def test_determine_quantities_06(self):
+        """Testing routine determine_quantities().
+
+        Testing functionality of routines in standard settings.
+        """
+        quantities = determine_quantities(cols = self.cols2,
+                                          name_list = 'benzene',
+                                          verbose = True)
+
+        assert quantities == ['benzene']
+
+    def test_determine_quantities_07(self):
+        """Testing routine determine_quantities().
+
+        Testing Error message if no quantity found.
+        """
+        with pytest.raises(ValueError):
+            determine_quantities(cols = self.cols2,
+                                 name_list = 'test_quantity',
+                                 )
+
+
+    def test_determine_quantities_8(self):
+        """Testing routine determine_quantities().
+
+        Testing correct handling if keyword name_list not correcty provided.
+        """
+        with pytest.raises(ValueError,match = "Keyword 'name_list' in correct format"):
+            determine_quantities(cols = self.cols2,
+                                 name_list = 7.0,
+                                 )
+
 
 class TestDataExtract:
     """Class for testing data module of mibipret."""

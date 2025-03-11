@@ -18,6 +18,7 @@ DEF_settings = dict(
     intercept_color = 'forestgreen',
     loc = 'best',
     dpi = 300,
+    title = False,
     )
 
 def Lambda_plot(delta_C,
@@ -110,6 +111,8 @@ def Lambda_plot(delta_C,
     ax.set_xlabel(r'$\delta^{{13}}$C')
     ax.set_ylabel(r'$\delta^2$H')
     ax.legend(loc =settings['loc'], fontsize=settings['fontsize'])
+    if isinstance(settings['title'],str):
+        ax.set_title(settings['title'],fontsize = settings['fontsize'])
     fig.tight_layout()
 
     ### ---------------------------------------------------------------------------
@@ -202,6 +205,8 @@ def Rayleigh_fractionation_plot(concentration,
     ax.set_ylabel(r'$\delta$',fontsize=settings['fontsize'])
     ax.grid(True,zorder = 0)
     ax.legend(loc =settings['loc'], fontsize=settings['fontsize'])
+    if isinstance(settings['title'],str):
+        ax.set_title(settings['title'],fontsize = settings['fontsize'])
     fig.tight_layout()
 
     ### ---------------------------------------------------------------------------
@@ -309,6 +314,8 @@ def Keeling_plot(concentration,
     ax.grid(True,zorder = 0)
     ax.set_xlim([0-x[-1]*0.05, x[-1]*1.05])
     ax.legend(loc =settings['loc'], fontsize=settings['fontsize'])
+    if isinstance(settings['title'],str):
+        ax.set_title(settings['title'],fontsize = settings['fontsize'])
     fig.tight_layout()
 
     ### ---------------------------------------------------------------------------

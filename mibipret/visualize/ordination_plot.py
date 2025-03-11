@@ -11,6 +11,7 @@ import numpy as np
 
 DEF_settings = dict(
     figsize = [3.75,3.75],
+    title = False,
     label_fontsize = 8,
     loading_fontsize = 8,
     score_fontsize = 6,
@@ -239,6 +240,9 @@ def ordination_plot(ordination_output,
 
     ### ---------------------------------------------------------------------------
     ### Save figure to file if file path provided
+
+    if isinstance(settings['title'],str):
+        plt.title(settings['title'],fontsize = settings['label_fontsize'])
 
     plt.tight_layout()
     if save_fig is not False:

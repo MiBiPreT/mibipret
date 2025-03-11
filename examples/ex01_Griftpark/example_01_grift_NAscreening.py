@@ -11,7 +11,10 @@
 # from visualize.activity import activity
 
 import mibipret.analysis.sample.screening_NA as na
-import mibipret.data.data as md
+from mibipret.data.check_data import standardize
+from mibipret.data.load_data import load_csv
+
+#from mibipret.data.check_data import check_columns,check_units,check_values, standardize
 from mibipret.visualize.activity import activity
 
 ###------------------------------------------------------------------------###
@@ -26,17 +29,17 @@ file_standard = './grift_BTEXNII_standard.csv'
 
 ###------------------------------------------------------------------------###
 ### Load and standardize data
-data_raw,units = md.load_csv(file_path,verbose = verbose)
+data_raw,units = load_csv(file_path,verbose = verbose)
 
-# column_names_known,column_names_unknown,column_names_standard = md.check_columns(data, verbose = verbose)
+# column_names_known,column_names_unknown,column_names_standard = check_columns(data, verbose = verbose)
 # # # print("\nQuantities to be checked on column names: \n",column_names_unknown)
 
-# check_list = md.check_units(data,verbose = verbose)
+# check_list = check_units(data,verbose = verbose)
 # # # print("\nQuantities to be checked on units: \n",check_list)
 
-# data_pure = md.check_values(data, verbose = verbose)
+# data_pure = check_values(data, verbose = verbose)
 
-data,units = md.standardize(data_raw,reduce = True, store_csv=file_standard,  verbose=verbose)
+data,units = standardize(data_raw,reduce = True, store_csv=file_standard,  verbose=verbose)
 
 ###------------------------------------------------------------------------###
 ### perform NA screening step by step

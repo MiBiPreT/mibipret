@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Routines for calculating natural attenuation potential.
 
-@author: alraune
+@author: Alraune Zech
 """
 
 import numpy as np

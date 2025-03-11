@@ -6,10 +6,9 @@
 """
 
 import numpy as np
-import pandas as pd
 import skbio.stats.ordination as sciord
 from sklearn import decomposition
-from mibipret.data.names_data import name_sample
+from mibipret.data.check_data import check_data_frame
 
 
 def pca(data_frame,
@@ -123,7 +122,7 @@ def pca(data_frame,
         print('----------------------------------------------------------------')
         for i in range(len(percent_explained)):
             print('Principle component {} explains {}% of the total variance.'.format(i,percent_explained[i]))
-        print('\nThe correlation coefficient between PC1 and PC2 is {}.'.format(coef))
+        print('\nThe correlation coefficient between PC1 and PC2 is {:.2e}.'.format(coef))
         print('----------------------------------------------------------------')
 
     results = {"method": 'pca',
@@ -365,31 +364,3 @@ def extract_variables(columns,
 
     return intersection
 
-
-def check_data_frame(data_frame):
-    """Checking data on correct format.
-
-    Input
-    -----
-        data_frame: pd.DataFrame
-            quantities for data analysis given per sample
-
-    Output
-    ------
-        data: pd.DataFrame
-            copy of given dataframe with index set to sample name
-        cols: list
-            List of column names
-    """
-    if not isinstance(data_frame, pd.DataFrame):
-        raise ValueError("Calculation not possible with given data. \
-                          Data has to be a panda-DataFrame or Series \
-                          but is given as type {}".format(type(data_frame)))
-    else:
-        data = data_frame.copy()
-        cols = data.columns.to_list()
-        if name_sample in data.columns:
-            data.set_index(name_sample,inplace = True)
-            cols.remove(name_sample)
-
-    return data, cols

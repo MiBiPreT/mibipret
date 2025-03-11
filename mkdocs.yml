@@ -13,13 +13,20 @@ nav:
     - Development: getting-started/development.md
   - Application:
     - Data pipeline: application/data_pipeline_template.md
+  - Home: index.md
+  - Introduction: introduction/introduction.md
+  - Methods: 
+    - Ordination: methods/ordination.md
+  - Development: development/development.md
   - API Reference:
-    - Reference: reference/reference.md
+    - Data: reference/reference_data.md
+    - Analysis: reference/reference_analysis.md
+    - Visualize: reference/reference_visualize.md
 
 theme:
   name: "material"
   favicon: assets/icon.png
-  logo: assets/icon.png
+  logo: assets/logo.png
   language: en
   # https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#primary-color
   palette:
