@@ -10,6 +10,8 @@ copyright: Copyright &copy; 2024 Alraune Zech, Sona Aseyednezhad, Robin Richards
 nav:
   - Home: index.md
   - Introduction: introduction/introduction.md
+  - Application: 
+    - Data pipeline: application/data_pipeline_template.md
   - Methods: 
     - Ordination: methods/ordination.md
   - Development: development/development.md
