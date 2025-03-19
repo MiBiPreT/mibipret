@@ -28,3 +28,5 @@ env3
 venv
 venv3
 
+#build folder
+build/
