@@ -17,6 +17,7 @@ from mibipret.data.load_data import load_excel
 from mibipret.data.set_data import compare_lists
 from mibipret.data.set_data import determine_quantities
 from mibipret.data.set_data import extract_data
+from mibipret.data.set_data import extract_settings
 from mibipret.data.set_data import merge_data
 
 path_data = "./mibipret/data"
@@ -752,11 +753,28 @@ class TestDetermineQuantities:
 
         Testing correct handling if keyword name_list not correcty provided.
         """
-        with pytest.raises(ValueError,match = "Keyword 'name_list' in correct format"):
+        with pytest.raises(ValueError,match = "Keyword 'name_list' needs to be a string or a list of strings."):
             determine_quantities(cols = self.cols2,
                                  name_list = 7.0,
                                  )
 
+
+class TestExtractSettings:
+    """Class for testing data module of mibipret."""
+
+    columns =  ['sample_nr', 'obs_well', 'depth', 'well_type', 'aquifer', 'sulfate','benzene']
+    s00 = ['2000-001', 'B-MLS1-3-12',4.,'B-MLS1',2 ,7.23, 263]
+    data4extract = pd.DataFrame(data = [s00],columns = columns)
+
+    def test_extract_data_01(self,capsys):
+        """Testing routine extract_data().
+
+        Testing functionality of routines in standard settings.
+        """
+        data = extract_settings(self.data4extract, verbose = True)
+        out,err=capsys.readouterr()
+
+        assert set(data.columns) == {'sample_nr', 'obs_well', 'depth', 'well_type', 'aquifer'}  and len(out)>0
 
 class TestDataExtract:
     """Class for testing data module of mibipret."""

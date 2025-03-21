@@ -73,12 +73,12 @@ def determine_quantities(cols,
             print("Choosing single quantity:", name_list)
 
     else:
-        raise ValueError("Keyword 'name_list' in correct format")
+        raise ValueError("Keyword 'name_list' needs to be a string or a list of strings.")
 
     if not quantities:
-        raise ValueError("No quantities from name list provided in data.\
+        raise ValueError("No quantities from name list '{}' provided in data.\
                          Presumably data not in standardized format. \
-                         Run 'standardize()' first.")
+                         Run 'standardize()' first.".format(name_list))
 
     if remainder_list2:
         print("WARNING: quantities from name list not in data:", *remainder_list2,sep='\n')
@@ -89,6 +89,43 @@ def determine_quantities(cols,
         print("Selected set of quantities: ", *quantities,sep='\n')
 
     return quantities
+
+def extract_settings(data_frame,
+                     verbose = False,
+                     ):
+    """Extracting data of specified variables from dataframe.
+
+    Args:
+    -------
+        data_frame: pandas.DataFrames
+            dataframe with the measurements
+        verbose: Boolean
+            verbose flag (default False)
+
+    Returns:
+    -------
+        data: pd.DataFrame
+            dataframe with settings
+
+    Raises:
+    -------
+    None (yet).
+
+    Example:
+    -------
+    To be added.
+
+    """
+    ### check on correct data input format and extracting column names as list
+    data,cols= check_data_frame(data_frame,inplace = False)
+
+    settings,r1,r2 = compare_lists(cols,names.setting_data)
+
+    if verbose:
+        print("Settings available in data: ", settings)
+
+    return data[settings]
+
 
 def extract_data(data_frame,
                  name_list,
