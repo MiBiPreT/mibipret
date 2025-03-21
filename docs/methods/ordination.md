@@ -1,4 +1,4 @@
-# `mibipret` ordination
+# `mibipret` Ordination
 
 ## General
 
@@ -44,7 +44,6 @@ Constrained ordination maximizes correlation between the independent and depende
 variables. The implemented methods RDA and CCA are canonical ordination techniques, made to 
 detect patterns in the dependent variables by the independent variables. 
 
-
 RDA bases its axes on the same principles as PCA, by maximizing the total variance 
 for each axis. Like PCA, it is used when the assumed relationship between the
 independent and dependent variables is linear. 
@@ -55,6 +54,11 @@ It is used when the assumed relationship between the data is unimodal, i.e. the 
 having a probability distribution with a single peak. 
 
 ### Ordination plots
+
+Results of all ordination analysis can be visualized with `plot ordination_plot()`.
+It creates ordination plot based on the results of the ordination analysis routines 
+`pca()`, `cca()`, or `rda()`. The output of the analysis routines is streamlined and 
+can directly be used as input to the visualization routine.
 
 The two plot axis represent the two main axis identified by the ordination methods. 
 The first ordination axis is oriented horizontally and the second vertically. 
@@ -95,10 +99,5 @@ Note that logarithmic transformation is performed before standardization or cent
 since logarithms give no solution for negative values.
 
 [not yet implemented] 
-Samples or variables can be designated as supplementary. Then the values will not
-considered during ordnation analysis, but their scores and loadings relative to 
-the axes will be determined for visualization. 
-After performing the ordination analysis, data can be scaled or transformed again, 
-for the purpose of plotting preferences. Scaling can be focused on either variable 
-or sample distance. 
+Samples or variables can be designated as supplementary. Then the values will not considered during ordnation analysis, but their scores and loadings relative to the axes will be determined for visualization.  After performing the ordination analysis, data can be scaled or transformed again, for the purpose of plotting preferences. Scaling can be focused on either variable or sample distance. 
 

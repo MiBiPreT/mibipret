@@ -11,7 +11,11 @@ nav:
   - Home: index.md
   - Introduction: introduction/introduction.md
   - Methods: 
+    - Overview: methods/overview.md
+    - Data: methods/data.md
+    - NA Screening: methods/na_screening.md
     - Ordination: methods/ordination.md
+    - Stable Isotope Analysis: methods/stable_isotopes.md
   - Development: development/development.md
   - API Reference:
     - Data: reference/reference_data.md
